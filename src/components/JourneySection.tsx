@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { BookMarked, BookOpen, CircleDot, Download, Headphones, ListChecks, Lock, Mic, Smartphone, Sun } from "lucide-react";
+import { BookMarked, BookOpen, CalendarCheck, ChartColumn, CircleDot, Download, Headphones, ListChecks, Lock, Mic, Sun } from "lucide-react";
 import { gsap, useGSAP, isLite, MQ } from "@/lib/gsap";
 import { buildJourney } from "@/animations/journey";
 import { STEPS } from "@/animations/choreography";
@@ -11,34 +11,20 @@ import { CinematicPhone } from "./CinematicPhone";
 const ar = (n: number) => n.toLocaleString("ar-EG", { minimumIntegerDigits: 2, useGrouping: false });
 const ICONS: Record<LayerIcon, typeof Mic> = {
   mic: Mic, lock: Lock, list: ListChecks, book: BookOpen, headphones: Headphones,
-  download: Download, sun: Sun, bookmark: BookMarked, circle: CircleDot,
+  download: Download, sun: Sun, bookmark: BookMarked, circle: CircleDot, calendar: CalendarCheck, chart: ChartColumn,
 };
 
 const flat = chapters.flatMap((ch, c) => ch.steps.map((s, k) => ({ ...s, c, k, chapter: ch })));
 const chapterOfStep = flat.map((s) => s.c);
 
 function Copy({ s, index }: { s: (typeof flat)[number]; index?: number }) {
-  const where = screen(s.screens[0]).where;
   return (
     <div className="copy" data-copy={index}>
       <span className="step-no">
-        الفصل {ar(s.c + 1)} / {ar(chapters.length)} · {s.chapter.label}
+        {ar(s.c + 1)} / {ar(chapters.length)} · {s.chapter.label}
       </span>
       <h3>{s.title}</h3>
       <p>{s.body}</p>
-      <div className="chips">
-        {s.chips.map((c) => (
-          <span className="chip" key={c}>
-            {c}
-          </span>
-        ))}
-      </div>
-      {where && (
-        <span className="where">
-          <Smartphone size={15} strokeWidth={1.6} aria-hidden="true" />
-          {where}
-        </span>
-      )}
     </div>
   );
 }

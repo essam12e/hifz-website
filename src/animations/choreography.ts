@@ -1,62 +1,55 @@
 /**
- * Camera and layout numbers for the journey — kept apart from the copy.
- * x / y: fractions of the scene box from its centre; z: px of depth (negative
- * = further away); rotations in degrees. Card w: px on desktop, fraction of
- * the scene width on mobile. On phones the rotations are softened by
- * MOBILE_ROT and the sideways moves by MOBILE_X.
+ * Camera numbers for the journey, taken from Cinematic V3's phone timeline:
+ *   from {x:180, rotateY:-35, rotateZ:13, scale:.75}
+ *   →    {x:0,   rotateY:-15, rotateZ:0,  scale:1}      (state 1)
+ *   →    {rotateY:18,  rotateZ:-6, y:-30}               (state 2)
+ *   →    {rotateY:-20, rotateZ:5,  y:25}                (state 3)
+ *   →    {rotateY:0,   rotateZ:0,  y:0}                 (state 4, centred)
+ * with the phone's resting rotateX(6deg) from V3's CSS.
+ * x / y: fractions of the scene box from its centre (V3's 180px / 30px at a
+ * 600px scene); z: px of depth; rotations in degrees. Card w: px on desktop,
+ * fraction of the scene width on mobile. On phones the rotations are softened
+ * by MOBILE_ROT and the sideways moves by MOBILE_X.
  */
 export type Cam = { x?: number; y?: number; z?: number; ry?: number; rx?: number; rz?: number; s?: number };
 export type CardPose = { x: number; y: number; z: number; w: number; r?: number; drift?: number; round?: boolean };
 export type StepMotion = { cam: Cam; weight?: number; cards?: Record<string, { d: CardPose; m: CardPose }> };
 
-export const MOBILE_ROT = 0.5;
-export const MOBILE_X = 0.35;
+export const MOBILE_ROT = 0.7;
+export const MOBILE_X = 0.45;
 
-/** The phone before the journey is pinned: far, turned, off to the side (V3 entry). */
-export const ENTRY: Cam = { x: 0.3, y: 0.04, z: -260, ry: -38, rx: 4, rz: 13, s: 0.82 };
+/** V3 entry pose. */
+export const ENTRY: Cam = { x: 0.3, ry: -35, rx: 6, rz: 13, s: 0.75 };
 
-/** The pose the phone swings through between two chapters. */
-export const SWING: Cam[] = [
-  { x: -0.06, y: -0.04, z: -320, ry: 34, rx: 8, rz: -6, s: 0.9 }, // recitation -> quran
-  { x: 0.06, y: 0.05, z: -320, ry: -36, rx: 6, rz: 6, s: 0.9 }, // quran -> adhkar
-];
-
-/** Steps in journey order (3 + 3 + 4). */
+/** One state per chapter (V3 keyframes). */
 export const STEPS: StepMotion[] = [
-  // التسميع
-  { cam: { ry: -15, rx: 6 } },
-  { cam: { x: 0.03, y: -0.03, ry: 18, rx: 4, rz: -6 } },
+  // 01 التسميع — V3 state 1, then the phone steps back and three real pieces come out
   {
-    cam: { z: -170, ry: -4, rx: 2, s: 0.94 },
-    weight: 2.1,
+    cam: { ry: -15, rx: 6 },
+    weight: 1.5,
     cards: {
-      "recite-revealed": { d: { x: -0.17, y: -0.34, z: 90, w: 430, r: -2, drift: -26 }, m: { x: 0, y: -0.36, z: 60, w: 0.9, drift: -10 } },
-      "recite-hidden-row": { d: { x: 0.21, y: -0.12, z: 170, w: 400, r: 2, drift: 34 }, m: { x: 0, y: -0.15, z: 90, w: 0.86, drift: 8 } },
-      "recite-feedback": { d: { x: -0.16, y: 0.19, z: 130, w: 430, r: -1, drift: -14 }, m: { x: 0, y: 0.17, z: 70, w: 0.9, drift: -8 } },
-      "recite-mic": { d: { x: 0.25, y: 0.34, z: 210, w: 112, drift: 40, round: true }, m: { x: 0.28, y: 0.36, z: 110, w: 0.2, drift: 10, round: true } },
+      "recite-revealed": { d: { x: -0.2, y: -0.3, z: 120, w: 420, r: -3, drift: -28 }, m: { x: 0, y: -0.36, z: 60, w: 0.88, drift: -10 } },
+      "recite-feedback": { d: { x: 0.2, y: 0.22, z: 170, w: 400, r: 2, drift: 30 }, m: { x: 0, y: 0.2, z: 90, w: 0.88, drift: 10 } },
+      "recite-mic": { d: { x: -0.27, y: 0.3, z: 230, w: 104, drift: -40, round: true }, m: { x: -0.3, y: 0.38, z: 110, w: 0.2, drift: -12, round: true } },
     },
   },
-  // المصحف والتلاوة
-  { cam: { ry: 14, rx: 5, rz: -2 } },
-  { cam: { x: 0.04, y: -0.02, ry: -20, rx: 6, rz: 5 } },
+  // 02 المصحف والاستماع — V3 state 2
   {
-    cam: { z: -150, ry: 6, rx: 2, s: 0.94 },
-    weight: 1.9,
+    cam: { y: -0.05, ry: 18, rx: 6, rz: -6 },
+    weight: 1.3,
     cards: {
-      "listen-ayah": { d: { x: -0.12, y: -0.31, z: 120, w: 470, r: -2, drift: -30 }, m: { x: 0, y: -0.31, z: 70, w: 0.92, drift: -10 } },
-      "listen-player": { d: { x: 0.14, y: 0.34, z: 170, w: 420, r: 2, drift: 30 }, m: { x: 0, y: 0.34, z: 90, w: 0.9, drift: 10 } },
+      "listen-ayah": { d: { x: 0.18, y: -0.3, z: 140, w: 440, r: 2, drift: -26 }, m: { x: 0, y: -0.33, z: 70, w: 0.9, drift: -10 } },
+      "listen-player": { d: { x: -0.17, y: 0.32, z: 190, w: 400, r: -2, drift: 28 }, m: { x: 0, y: 0.35, z: 90, w: 0.9, drift: 10 } },
     },
   },
-  // الأذكار
-  { cam: { ry: -16, rx: 6, rz: 3 }, weight: 1.2 },
+  // 03 الأذكار — V3 state 3
   {
-    cam: { z: -120, ry: 10, rx: 3, rz: -2, s: 0.96 },
-    weight: 1.6,
+    cam: { y: 0.04, ry: -20, rx: 6, rz: 5 },
+    weight: 1.1,
     cards: {
-      "adhkar-complete": { d: { x: -0.15, y: 0.3, z: 160, w: 420, r: -2, drift: -24 }, m: { x: 0, y: 0.33, z: 90, w: 0.9, drift: -8 } },
+      "adhkar-complete": { d: { x: 0.19, y: 0.28, z: 170, w: 400, r: 2, drift: -24 }, m: { x: 0, y: 0.33, z: 90, w: 0.9, drift: -8 } },
     },
   },
-  { cam: { x: -0.03, ry: -18, rx: 5, rz: 4 } },
-  // closing shot: the camera pushes in on the tasbih screen
-  { cam: { y: 0.02, z: 90, ry: 0, rx: 0, rz: 0, s: 1 }, weight: 1.3 },
+  // 04 المراجعة اليومية — V3 final: the phone comes back to the centre
+  { cam: { ry: 0, rx: 0, rz: 0, s: 1 }, weight: 0.9 },
 ];

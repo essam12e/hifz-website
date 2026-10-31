@@ -1,5 +1,5 @@
 import { gsap } from "@/lib/gsap";
-import { ENTRY, MOBILE_ROT, MOBILE_X, STEPS, SWING, type Cam, type CardPose } from "./choreography";
+import { ENTRY, MOBILE_ROT, MOBILE_X, STEPS, type Cam, type CardPose } from "./choreography";
 
 /**
  * The journey: one pinned stage, one phone, three chapters (as in Cinematic V3).
@@ -84,7 +84,7 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
 
   // ---- the pinned journey
   const weights = STEPS.map((s) => s.weight ?? 1);
-  const chapterGap = 0.8; // extra scroll for each chapter change
+  const chapterGap = 0.6; // extra scroll for each chapter change
   const chapterChanges = map.chapterOfStep.filter((c, i) => i > 0 && c !== map.chapterOfStep[i - 1]).length;
   const total = 0.5 + weights.reduce((a, b) => a + b, 0) + chapterChanges * chapterGap + 0.4;
 
@@ -94,9 +94,9 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
       id: "journey",
       trigger: root,
       start: "top top",
-      end: () => "+=" + Math.round(window.innerHeight * total * (mobile ? 0.8 : 0.9)),
+      end: () => "+=" + Math.round(window.innerHeight * total * (mobile ? 0.46 : 0.52)),
       pin: stage,
-      scrub: mobile ? 0.8 : 1.1,
+      scrub: mobile ? 1 : 1.2, // V3 scrub
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onRefreshInit: () => gsap.set(cardEls, { width: (_: number, el: HTMLElement) => cardWidth(el) }),
@@ -132,8 +132,8 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
       if (newChapter) {
         const c = map.chapterOfStep[i];
         marks.push({ f: t, c, a: t + chapterGap + 0.45 }); // a = where the new chapter's copy is fully in
-        // the camera swings away, the tiles flip to the new chapter, the camera comes back
-        tl.to(phone, { ...cam(SWING[c - 1]), duration: chapterGap * 0.5, ease: "power2.inOut" }, t);
+        // V3: the phone travels straight to the next pose while the tiles flip to the new chapter
+        tl.to(phone, { ...cam(step.cam), duration: chapterGap + 0.2, ease: "power1.inOut" }, t);
         tl.to(tiles, { rotationY: 90, duration: chapterGap * 0.3, ease: "power1.in", stagger: 0.05 }, t + 0.05);
         tl.to(variants(c - 1), { autoAlpha: 0, duration: 0.01 }, t + chapterGap * 0.36);
         tl.to(variants(c), { autoAlpha: 1, duration: 0.01 }, t + chapterGap * 0.36);
@@ -148,7 +148,7 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
       }
       tl.to(copies[prev], { autoAlpha: 0, y: -24, duration: 0.2, ease: "power1.in" }, start);
       tl.fromTo(copies[i], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.26, ease: "power2.out", immediateRender: false }, start + 0.18);
-      tl.to(phone, { ...cam(step.cam), duration: 0.5, ease: "power2.inOut" }, newChapter ? t - chapterGap * 0.5 + 0.1 : start);
+      if (!newChapter) tl.to(phone, { ...cam(step.cam), duration: 0.5, ease: "power2.inOut" }, start);
       // the new screen settles on top of the old one, then the old one is released (no muddy double image)
       tl.fromTo(shotsOf(i)[0], { autoAlpha: 0, scale: 1.06, yPercent: 2 }, { autoAlpha: 1, scale: 1, yPercent: 0, duration: 0.24, ease: "power2.out", immediateRender: false }, start + 0.12);
       tl.to(shotsOf(prev), { autoAlpha: 0, duration: 0.02 }, start + 0.37);
@@ -174,7 +174,7 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
       const hold = back - (out + 0.34 + 0.07 * cards.length);
       if (hold > 0.05) {
         tl.to(cards, { y: (_: number, el: HTMLElement) => pose(el).y * H() + (pose(el).drift ?? 0), duration: hold }, out + 0.34 + 0.07 * cards.length);
-        tl.fromTo(phone, { rotationY: ((step.cam.ry ?? 0) - 5) * rot }, { rotationY: ((step.cam.ry ?? 0) + 5) * rot, duration: hold, immediateRender: false }, out + 0.34);
+        tl.to(phone, { rotationY: ((step.cam.ry ?? 0) + 6) * rot, duration: hold, ease: "sine.inOut" }, out + 0.34);
       }
       // regroup: the pieces go back into the screen they came from
       tl.to(cards, { x: 0, y: 0, z: 0, rotation: 0, scale: 0.3, autoAlpha: 0, duration: 0.26, ease: "power2.in", stagger: { each: 0.04, from: "end" } }, back);
@@ -185,7 +185,7 @@ export function buildJourney(root: HTMLElement, map: JourneyMap, mobile: boolean
     }
     t = (i === 0 ? 0.5 : t) + len;
   });
-  tl.to({}, { duration: 0.4 });
+  tl.to({}, { duration: 0.25 });
 
   // chapter starts as fractions of the pin, read by the journey line
   const d = tl.duration();

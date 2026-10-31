@@ -1,8 +1,6 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
-import { IntroSection } from "@/components/IntroSection";
 import { JourneySection } from "@/components/JourneySection";
-import { VerseInterlude } from "@/components/VerseInterlude";
 import { ContinuitySection } from "@/components/ContinuitySection";
 import { DownloadSection } from "@/components/DownloadSection";
 import { Footer } from "@/components/Footer";
@@ -12,7 +10,7 @@ import { RefreshOnLoad } from "@/components/RefreshOnLoad";
 export default function Page() {
   return (
     <>
-      <a href="#recitation" className="skip-link">
+      <a href="#journey" className="skip-link">
         انتقل إلى المحتوى
       </a>
       <div className="grain" aria-hidden="true" />
@@ -20,9 +18,7 @@ export default function Page() {
       <ScrollProgressPath />
       <main>
         <HeroSection />
-        <IntroSection />
         <JourneySection />
-        <VerseInterlude />
         <ContinuitySection />
         <DownloadSection />
       </main>

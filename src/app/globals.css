@@ -162,7 +162,7 @@ button { font: inherit; color: inherit; }
 .where { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--petrol-400); }
 
 .scene {
-  position: relative; height: min(640px, 82svh); min-height: 0;
+  position: relative; height: min(780px, 90svh); min-height: 0;
   display: grid; place-items: center; perspective: 1200px; perspective-origin: 50% 45%;
 }
 .scene-rings {
@@ -170,7 +170,7 @@ button { font: inherit; color: inherit; }
   border: 1px solid rgb(57 149 157 / .16);
   box-shadow: 0 0 0 95px rgb(8 119 128 / .04), 0 0 0 190px rgb(8 119 128 / .028);
 }
-.scene .phone { --phone-w: clamp(220px, min(19vw, calc((82svh - 70px) / 2.2)), 290px); z-index: 4; will-change: transform; }
+.scene .phone { --phone-w: clamp(240px, min(24vw, calc((88svh - 60px) / 2.15)), 360px); z-index: 4; will-change: transform; }
 
 /* the three floating tiles (V3 .layer) */
 .layer { position: absolute; z-index: 5; }

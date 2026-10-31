@@ -42,10 +42,10 @@ export function HeroSection() {
           القرآن الكريم.
         </h1>
         <p className="hero-lead" data-intro="">
-          مصحف بصفحات مصحف المدينة، وتسميع يُخفي الآيات ويكشف الكلمة بعد قراءتها، ومراجعة مجدولة، وحصن المسلم كاملًا.
+          مصحف، وتسميع، ومراجعة يومية، وأذكار. في تطبيق واحد.
         </p>
         <div className="hero-actions" data-intro="">
-          <a className="btn btn-light" href="#recitation">
+          <a className="btn btn-light" href="#journey">
             شاهد كيف يعمل
           </a>
           <a className="btn btn-ghost" href="#download">
@@ -67,7 +67,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <a className="scroll-cue" href="#story" data-intro="">
+      <a className="scroll-cue" href="#journey" data-intro="">
         <ArrowDown size={16} strokeWidth={1.6} aria-hidden="true" />
         انزل لتشاهد التطبيق
       </a>

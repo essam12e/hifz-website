@@ -4,6 +4,7 @@ const links = [
   { href: "#recitation", label: "التسميع" },
   { href: "#quran", label: "المصحف" },
   { href: "#adhkar", label: "الأذكار" },
+  { href: "#review", label: "المراجعة" },
 ];
 
 export function Header() {

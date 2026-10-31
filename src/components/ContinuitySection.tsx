@@ -6,9 +6,9 @@ import { screen, type ScreenId } from "@/content/screens";
 import { CinematicPhone } from "./CinematicPhone";
 
 const items: { id: ScreenId; title: string; body: string }[] = [
-  { id: "08-review", title: "مراجعة اليوم", body: "كل صفحة محفوظة مجدولة بخوارزمية FSRS، ويُقيَّم حفظها بعدد أخطائك فيها." },
-  { id: "50-quran-home", title: "آية اليوم", body: "آية جديدة كل يوم على الشاشة الرئيسية، تفتحها في المصحف أو تستمع إليها." },
-  { id: "10-stats", title: "التقدم", body: "صفحاتك المحفوظة، وأضعف الآيات، وخريطة للمصحف تبيّن قوة الحفظ." },
+  { id: "50-quran-home", title: "آية اليوم", body: "" },
+  { id: "10-stats", title: "التقدم", body: "" },
+  { id: "09-log", title: "سجل الأخطاء", body: "" },
 ];
 
 /** V3 «daily» composition: copy on one side, the real screens as a deck on the other. */
@@ -30,17 +30,9 @@ export function ContinuitySection() {
     <section ref={root} id="continuity" className="continuity" data-section="الاستمرارية">
       <div className="continuity-copy">
         <span className="kicker" data-reveal="">الاستمرارية</span>
-        <h2 data-reveal="">مراجعة تحفظ ما حفظت.</h2>
-        <p data-reveal="">يقترح التطبيق ما تراجعه اليوم وما تحفظه بعده، ويعرض تقدمك من سجلّ تسميعك.</p>
-        <ol className="continuity-list">
-          {items.map((it) => (
-            <li key={it.id} data-reveal="">
-              <strong>{it.title}</strong>
-              <span>{it.body}</span>
-            </li>
-          ))}
-        </ol>
-        <p className="fine-print" data-reveal="">الأرقام الظاهرة في هذه اللقطات بيانات تجريبية من بيئة اختبار التطبيق.</p>
+        <h2 data-reveal="">كل يوم، خطوة.</h2>
+        <p data-reveal="">آية اليوم، وتقدمك، وسجل أخطائك. من تسميعك أنت.</p>
+        <p className="fine-print" data-reveal="">الأرقام في اللقطات بيانات تجريبية.</p>
       </div>
       <div className="deck" data-fan-row="">
         {items.map((it) => (
