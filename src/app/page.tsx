@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { IntroSection } from "@/components/IntroSection";
-import { RecitationSection, QuranSection, AdhkarSection } from "@/components/Showcases";
+import { JourneySection } from "@/components/JourneySection";
 import { VerseInterlude } from "@/components/VerseInterlude";
 import { ContinuitySection } from "@/components/ContinuitySection";
 import { DownloadSection } from "@/components/DownloadSection";
@@ -15,15 +15,14 @@ export default function Page() {
       <a href="#recitation" className="skip-link">
         انتقل إلى المحتوى
       </a>
+      <div className="grain" aria-hidden="true" />
       <Header />
       <ScrollProgressPath />
       <main>
         <HeroSection />
         <IntroSection />
-        <RecitationSection />
-        <QuranSection />
+        <JourneySection />
         <VerseInterlude />
-        <AdhkarSection />
         <ContinuitySection />
         <DownloadSection />
       </main>

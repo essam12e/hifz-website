@@ -29,7 +29,7 @@ export function interlude(root: HTMLElement) {
   return tl;
 }
 
-/** Continuity: three real screens arrive fanned out in depth and line up. */
+/** Continuity: three real screens arrive scattered in depth and settle into a deck (scrubbed). */
 export function continuity(root: HTMLElement, mobile: boolean) {
   const q = gsap.utils.selector(root);
   const cards = q("[data-fan]");
@@ -43,31 +43,31 @@ export function continuity(root: HTMLElement, mobile: boolean) {
     );
     return;
   }
+  // RTL: the first card sits on the right
   gsap.fromTo(
     cards,
     {
-      x: (i: number) => [-260, 0, 260][i] ?? 0,
-      z: (i: number) => [-320, 120, -320][i] ?? 0,
-      rotationY: (i: number) => [38, 0, -38][i] ?? 0,
-      rotation: (i: number) => [-8, 0, 8][i] ?? 0,
-      y: (i: number) => [140, 60, 140][i] ?? 0,
-      autoAlpha: 0.2,
+      x: (i: number) => [280, 0, -280][i] ?? 0,
+      z: (i: number) => [-340, 140, -340][i] ?? 0,
+      rotationY: (i: number) => [-42, 0, 42][i] ?? 0,
+      rotation: (i: number) => [8, 0, -8][i] ?? 0,
+      y: (i: number) => [160, 80, 160][i] ?? 0,
+      autoAlpha: 0.15,
     },
     {
       x: 0,
-      z: 0,
-      rotationY: (i: number) => [10, 0, -10][i] ?? 0,
-      rotation: 0,
-      y: (i: number) => [30, 0, 30][i] ?? 0,
+      z: (i: number) => [-70, 0, -70][i] ?? 0,
+      rotationY: (i: number) => [-16, 0, 16][i] ?? 0,
+      rotation: (i: number) => [3, 0, -3][i] ?? 0,
+      y: (i: number) => [26, 0, 26][i] ?? 0,
       autoAlpha: 1,
       ease: "power2.out",
-      stagger: 0.04,
       scrollTrigger: { trigger: q("[data-fan-row]")[0], start: "top 95%", end: "center 55%", scrub: 0.8 },
     },
   );
   // parallax: the side screens drift slower than the middle one
   gsap.to(cards, {
-    yPercent: (i: number) => [-6, -14, -6][i] ?? 0,
+    yPercent: (i: number) => [-5, -12, -5][i] ?? 0,
     ease: "none",
     scrollTrigger: { trigger: root, start: "center center", end: "bottom top", scrub: 1 },
   });

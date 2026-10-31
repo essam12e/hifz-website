@@ -19,6 +19,8 @@ export function heroIntro(root: HTMLElement) {
       0.95,
     )
     .fromTo(q("[data-rings]"), { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 2 }, 0);
+  // the halo breathes and turns, as in V3
+  gsap.to(q(".hero-halo"), { scale: 1.18, rotation: 90, duration: 8, ease: "sine.inOut", yoyo: true, repeat: -1 });
   // slow idle drift of the cards (transform only)
   q("[data-hero-card]").forEach((el, i) => {
     gsap.to(el, { yPercent: i ? 9 : -9, rotation: i ? -2 : 2, duration: 3.4 + i * 0.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.2 });

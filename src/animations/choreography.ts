@@ -1,70 +1,62 @@
 /**
- * Camera and layout numbers for the pinned scenes — kept apart from the copy.
- * x / y are fractions of the scene box measured from its centre (so they scale
- * with the viewport); rotations in degrees; w = card width in px (desktop) or
- * as a fraction of the scene width (mobile).
+ * Camera and layout numbers for the journey — kept apart from the copy.
+ * x / y: fractions of the scene box from its centre; z: px of depth (negative
+ * = further away); rotations in degrees. Card w: px on desktop, fraction of
+ * the scene width on mobile. On phones the rotations are softened by
+ * MOBILE_ROT and the sideways moves by MOBILE_X.
  */
-export type Cam = { x?: number; y?: number; ry?: number; rx?: number; rz?: number; s?: number };
-export type CardPose = { x: number; y: number; w: number; r?: number; round?: boolean };
-export type StepMotion = { cam: Cam; camMobile?: Cam; weight?: number; cards?: Record<string, { d: CardPose; m: CardPose }> };
-export type SceneMotion = { entry: Cam; entryMobile: Cam; steps: StepMotion[] };
+export type Cam = { x?: number; y?: number; z?: number; ry?: number; rx?: number; rz?: number; s?: number };
+export type CardPose = { x: number; y: number; z: number; w: number; r?: number; drift?: number; round?: boolean };
+export type StepMotion = { cam: Cam; weight?: number; cards?: Record<string, { d: CardPose; m: CardPose }> };
 
-export const recitationMotion: SceneMotion = {
-  entry: { x: 0.28, y: 0.06, ry: -38, rz: 11, s: 0.76 },
-  entryMobile: { x: 0.3, y: 0.08, ry: -30, rz: 9, s: 0.8 },
-  steps: [
-    { cam: { ry: -16, rx: 6 }, camMobile: { ry: -10, rx: 4 } },
-    { cam: { x: 0.04, y: -0.01, ry: 15, rx: 4, rz: -3 }, camMobile: { ry: 10, rx: 3, rz: -2 } },
-    {
-      // the "exploded" step: the phone steps back, its parts come forward
-      cam: { ry: 0, rx: 0, s: 0.84 },
-      camMobile: { s: 0.86 },
-      weight: 1.9,
-      cards: {
-        "recite-revealed": { d: { x: -0.16, y: -0.34, w: 430, r: -2 }, m: { x: 0, y: -0.37, w: 0.88 } },
-        "recite-hidden-row": { d: { x: 0.2, y: -0.12, w: 420, r: 2 }, m: { x: 0, y: -0.16, w: 0.9 } },
-        "recite-feedback": { d: { x: -0.15, y: 0.18, w: 430, r: -1 }, m: { x: 0, y: 0.17, w: 0.88 } },
-        "recite-mic": { d: { x: 0.27, y: 0.34, w: 112, round: true }, m: { x: 0, y: 0.38, w: 0.22, round: true } },
-      },
-    },
-    { cam: { x: -0.03, ry: -12, rx: 5, rz: 3 }, camMobile: { ry: -8, rx: 3, rz: 2 } },
-  ],
-};
+export const MOBILE_ROT = 0.5;
+export const MOBILE_X = 0.35;
 
-export const quranMotion: SceneMotion = {
-  entry: { x: -0.24, y: 0.05, ry: 34, rz: -9, s: 0.78 },
-  entryMobile: { x: -0.3, y: 0.08, ry: 28, rz: -8, s: 0.8 },
-  steps: [
-    { cam: { ry: 12, rx: 4 }, camMobile: { ry: 8, rx: 3 } },
-    { cam: { x: 0.05, ry: -18, rx: 6, rz: 2, s: 0.97 }, camMobile: { ry: -10, rx: 3, rz: 1 } },
-    {
-      cam: { x: -0.02, ry: 6, rx: 2, rz: -2, s: 0.88 },
-      camMobile: { s: 0.9 },
-      weight: 1.8,
-      cards: {
-        "listen-ayah": { d: { x: -0.1, y: -0.3, w: 470, r: -2 }, m: { x: 0, y: -0.3, w: 0.88 } },
-        "listen-player": { d: { x: 0.12, y: 0.33, w: 430, r: 2 }, m: { x: 0, y: 0.33, w: 0.88 } },
-      },
-    },
-    { cam: { ry: -10, rx: 4 }, camMobile: { ry: -7, rx: 3 } },
-  ],
-};
+/** The phone before the journey is pinned: far, turned, off to the side (V3 entry). */
+export const ENTRY: Cam = { x: 0.3, y: 0.04, z: -260, ry: -38, rx: 4, rz: 13, s: 0.82 };
 
-export const adhkarMotion: SceneMotion = {
-  entry: { x: 0.22, y: 0.1, ry: -32, rz: 7, s: 0.78 },
-  entryMobile: { x: 0.26, y: 0.1, ry: -26, rz: 6, s: 0.8 },
-  steps: [
-    { cam: { ry: -11, rx: 5 }, camMobile: { ry: -8, rx: 3 }, weight: 1.3 },
-    {
-      cam: { x: 0.03, ry: 13, rx: 3, rz: -2, s: 0.94 },
-      camMobile: { ry: 8, s: 0.94 },
-      weight: 1.6,
-      cards: {
-        "adhkar-complete": { d: { x: -0.14, y: 0.3, w: 430, r: -2 }, m: { x: 0, y: 0.33, w: 0.88 } },
-      },
+/** The pose the phone swings through between two chapters. */
+export const SWING: Cam[] = [
+  { x: -0.06, y: -0.04, z: -320, ry: 34, rx: 8, rz: -6, s: 0.9 }, // recitation -> quran
+  { x: 0.06, y: 0.05, z: -320, ry: -36, rx: 6, rz: 6, s: 0.9 }, // quran -> adhkar
+];
+
+/** Steps in journey order (3 + 3 + 4). */
+export const STEPS: StepMotion[] = [
+  // التسميع
+  { cam: { ry: -15, rx: 6 } },
+  { cam: { x: 0.03, y: -0.03, ry: 18, rx: 4, rz: -6 } },
+  {
+    cam: { z: -170, ry: -4, rx: 2, s: 0.94 },
+    weight: 2.1,
+    cards: {
+      "recite-revealed": { d: { x: -0.17, y: -0.34, z: 90, w: 430, r: -2, drift: -26 }, m: { x: 0, y: -0.36, z: 60, w: 0.9, drift: -10 } },
+      "recite-hidden-row": { d: { x: 0.21, y: -0.12, z: 170, w: 400, r: 2, drift: 34 }, m: { x: 0, y: -0.15, z: 90, w: 0.86, drift: 8 } },
+      "recite-feedback": { d: { x: -0.16, y: 0.19, z: 130, w: 430, r: -1, drift: -14 }, m: { x: 0, y: 0.17, z: 70, w: 0.9, drift: -8 } },
+      "recite-mic": { d: { x: 0.25, y: 0.34, z: 210, w: 112, drift: 40, round: true }, m: { x: 0.28, y: 0.36, z: 110, w: 0.2, drift: 10, round: true } },
     },
-    { cam: { x: -0.03, ry: -15, rx: 5, rz: 2 }, camMobile: { ry: -9, rx: 3, rz: 1 }, weight: 1.3 },
-    // closing shot of the scene: the camera pushes in on the tasbih screen
-    { cam: { x: 0, y: 0.02, ry: 0, rx: 0, rz: 0, s: 1.06 }, camMobile: { s: 1.04 }, weight: 1.4 },
-  ],
-};
+  },
+  // المصحف والتلاوة
+  { cam: { ry: 14, rx: 5, rz: -2 } },
+  { cam: { x: 0.04, y: -0.02, ry: -20, rx: 6, rz: 5 } },
+  {
+    cam: { z: -150, ry: 6, rx: 2, s: 0.94 },
+    weight: 1.9,
+    cards: {
+      "listen-ayah": { d: { x: -0.12, y: -0.31, z: 120, w: 470, r: -2, drift: -30 }, m: { x: 0, y: -0.31, z: 70, w: 0.92, drift: -10 } },
+      "listen-player": { d: { x: 0.14, y: 0.34, z: 170, w: 420, r: 2, drift: 30 }, m: { x: 0, y: 0.34, z: 90, w: 0.9, drift: 10 } },
+    },
+  },
+  // الأذكار
+  { cam: { ry: -16, rx: 6, rz: 3 }, weight: 1.2 },
+  {
+    cam: { z: -120, ry: 10, rx: 3, rz: -2, s: 0.96 },
+    weight: 1.6,
+    cards: {
+      "adhkar-complete": { d: { x: -0.15, y: 0.3, z: 160, w: 420, r: -2, drift: -24 }, m: { x: 0, y: 0.33, z: 90, w: 0.9, drift: -8 } },
+    },
+  },
+  { cam: { x: -0.03, ry: -18, rx: 5, rz: 4 } },
+  // closing shot: the camera pushes in on the tasbih screen
+  { cam: { y: 0.02, z: 90, ry: 0, rx: 0, rz: 0, s: 1 }, weight: 1.3 },
+];

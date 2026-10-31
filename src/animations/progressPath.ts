@@ -32,17 +32,29 @@ export function progressPath(svg: SVGSVGElement, label: HTMLElement | null) {
   function rebuild() {
     const max = Math.max(1, ScrollTrigger.maxScroll(window));
     const secs = gsap.utils.toArray<HTMLElement>("[data-section]");
-    const starts = secs.map((s) => ({
-      f: Math.min(1, Math.max(0, (s.getBoundingClientRect().top + window.scrollY) / max)),
-      name: s.dataset.section ?? "",
-    }));
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    const starts: { f: number; name: string }[] = [];
+    secs.forEach((s) => {
+      const top = s.getBoundingClientRect().top + window.scrollY;
+      const pin = s.dataset.marks ? ScrollTrigger.getById("journey") : null;
+      if (pin && s.dataset.chapters) {
+        // inside the pinned journey, each chapter gets its own stretch of line
+        const names: string[] = JSON.parse(s.dataset.chapters);
+        const marks: { f: number; c: number }[] = JSON.parse(s.dataset.marks ?? "[]");
+        marks.forEach((m) => starts.push({ f: clamp((pin.start + m.f * (pin.end - pin.start)) / max), name: names[m.c] ?? "" }));
+        return;
+      }
+      starts.push({ f: clamp(top / max), name: s.dataset.section ?? "" });
+    });
     starts.sort((a, b) => a.f - b.f);
     names = starts;
     const pts: string[] = [`M${CX} 0`];
     starts.forEach((s, i) => {
       const y0 = s.f * VB_H;
       const y1 = (starts[i + 1]?.f ?? 1) * VB_H;
-      const shape = SHAPES[s.name] ?? { amp: 6, waves: 1 };
+      const base = SHAPES[s.name] ?? { amp: 6, waves: 1 };
+      // phones: a simpler, straight line at the screen edge
+      const shape = window.innerWidth < 900 ? { amp: 0, waves: 0 } : base;
       const n = Math.max(2, Math.round((y1 - y0) / 4));
       for (let k = 1; k <= n; k++) {
         const t = k / n;

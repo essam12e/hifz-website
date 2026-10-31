@@ -29,9 +29,9 @@ src/
   app/            layout.tsx (اختيار وضع الحركة قبل الرسم) · page.tsx · globals.css
   styles/         tokens.css  ← ألوان التطبيق والخطوط والمسافات
   config/site.ts  ← رابط Google Play
-  content/        screens.ts (اللقطات ومكانها في التطبيق) · showcases.ts (نصوص المشاهد) · verse.json
-  animations/     showcase.ts · hero.ts · progressPath.ts · sections.ts · choreography.ts
-  components/     Header · HeroSection · IntroSection · FeatureShowcase · Showcases (التسميع/المصحف/الأذكار)
+  content/        screens.ts (اللقطات ومكانها في التطبيق) · journey.ts (فصول الرحلة ونصوصها) · verse.json
+  animations/     journey.ts (الرحلة المثبتة) · hero.ts · progressPath.ts · sections.ts · choreography.ts
+  components/     Header · HeroSection · IntroSection · JourneySection (رحلة واحدة: التسميع ثم المصحف ثم الأذكار)
                   CinematicPhone · VerseInterlude · ContinuitySection · DownloadSection · Footer · ScrollProgressPath
 scripts/prepare_assets.py  ← ينسخ اللقطات والشعار والخط من التطبيق (للقراءة فقط)
 public/           app-screens/ · brand/ · fonts/
