@@ -1,0 +1,86 @@
+import { gsap } from "@/lib/gsap";
+
+/** Text blocks rise into place, tied to scroll (reverses on the way up). */
+export function revealBlocks(root: HTMLElement, selector = "[data-reveal]") {
+  const els = gsap.utils.toArray<HTMLElement>(root.querySelectorAll(selector));
+  return gsap.fromTo(
+    els,
+    { autoAlpha: 0, y: 40 },
+    {
+      autoAlpha: 1,
+      y: 0,
+      ease: "power2.out",
+      stagger: 0.12,
+      scrollTrigger: { trigger: root, start: "top 80%", end: "top 35%", scrub: 0.6 },
+    },
+  );
+}
+
+/** Dark interlude: watermark logo turns slowly, the ayah block settles, layers at different speeds. */
+export function interlude(root: HTMLElement) {
+  const q = gsap.utils.selector(root);
+  const tl = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: { trigger: root, start: "top bottom", end: "bottom top", scrub: 0.8 },
+  });
+  tl.fromTo(q("[data-watermark]"), { yPercent: 18, scale: 0.9 }, { yPercent: -18, scale: 1.08 }, 0)
+    .fromTo(q("[data-layer='back']"), { yPercent: 30 }, { yPercent: -30 }, 0)
+    .fromTo(q("[data-layer='front']"), { y: 80 }, { y: -40 }, 0);
+  return tl;
+}
+
+/** Continuity: three real screens arrive fanned out in depth and line up. */
+export function continuity(root: HTMLElement, mobile: boolean) {
+  const q = gsap.utils.selector(root);
+  const cards = q("[data-fan]");
+  if (mobile) {
+    cards.forEach((el) =>
+      gsap.fromTo(
+        el,
+        { autoAlpha: 0, y: 70, rotationX: 14 },
+        { autoAlpha: 1, y: 0, rotationX: 0, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 92%", end: "top 55%", scrub: 0.6 } },
+      ),
+    );
+    return;
+  }
+  gsap.fromTo(
+    cards,
+    {
+      x: (i: number) => [-260, 0, 260][i] ?? 0,
+      z: (i: number) => [-320, 120, -320][i] ?? 0,
+      rotationY: (i: number) => [38, 0, -38][i] ?? 0,
+      rotation: (i: number) => [-8, 0, 8][i] ?? 0,
+      y: (i: number) => [140, 60, 140][i] ?? 0,
+      autoAlpha: 0.2,
+    },
+    {
+      x: 0,
+      z: 0,
+      rotationY: (i: number) => [10, 0, -10][i] ?? 0,
+      rotation: 0,
+      y: (i: number) => [30, 0, 30][i] ?? 0,
+      autoAlpha: 1,
+      ease: "power2.out",
+      stagger: 0.04,
+      scrollTrigger: { trigger: q("[data-fan-row]")[0], start: "top 95%", end: "center 55%", scrub: 0.8 },
+    },
+  );
+  // parallax: the side screens drift slower than the middle one
+  gsap.to(cards, {
+    yPercent: (i: number) => [-6, -14, -6][i] ?? 0,
+    ease: "none",
+    scrollTrigger: { trigger: root, start: "center center", end: "bottom top", scrub: 1 },
+  });
+}
+
+export function downloadScene(root: HTMLElement) {
+  const q = gsap.utils.selector(root);
+  const tl = gsap.timeline({
+    defaults: { ease: "power2.out" },
+    scrollTrigger: { trigger: root, start: "top 75%", end: "top 20%", scrub: 0.6 },
+  });
+  tl.fromTo(q("[data-dl-logo]"), { autoAlpha: 0, scale: 0.86, y: 30 }, { autoAlpha: 1, scale: 1, y: 0 }, 0)
+    .fromTo(q("[data-dl-block]"), { autoAlpha: 0, y: 36 }, { autoAlpha: 1, y: 0, stagger: 0.1 }, 0.15)
+    .fromTo(q("[data-dl-ring]"), { scale: 0.7, autoAlpha: 0 }, { scale: 1, autoAlpha: 1 }, 0);
+  return tl;
+}

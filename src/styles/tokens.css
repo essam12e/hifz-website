@@ -1,0 +1,63 @@
+/*
+ * Design tokens, taken from the app (app/src/main/kotlin/app/hifz/ui/Theme.kt,
+ * object Petrol + the light/dark palettes) and the official logo gradient.
+ */
+:root {
+  /* Petrol scale — identical hex values to Theme.kt `Petrol` */
+  --petrol-50: #e6f1f2;
+  --petrol-100: #b5d6d9;
+  --petrol-200: #76b3b8;
+  --petrol-300: #39959d;
+  --petrol-400: #087780; /* logo colour */
+  --petrol-500: #065d64;
+  --petrol-600: #044348;
+  --petrol-700: #032b2e;
+
+  /* App palette (light) */
+  --canvas: #f2f8f8;
+  --sheet: #fbfefe;
+  --paper: #ffffff;
+  --ink: var(--petrol-700);
+  --muted: #4e7174;
+  --line: #d3e6e8;
+  --accent: var(--petrol-400);
+  --bad: #b8382a;
+
+  /* App palette (dark) */
+  --night: #021a1c;
+  --night-deep: #011315;
+  --night-ink: var(--petrol-50);
+  --night-muted: #8db3b6;
+
+  /* Gradients — same stops the app uses for its header and primary cards */
+  --grad-brand: linear-gradient(120deg, var(--petrol-600) 0%, var(--petrol-400) 55%, var(--petrol-300) 100%);
+  --grad-night: radial-gradient(ellipse at 60% 40%, var(--petrol-500) 0%, var(--petrol-600) 38%, var(--petrol-700) 70%, var(--night-deep) 100%);
+
+  /* Type */
+  --font-ui: "TheYearofTheCamel", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-quran: "Amiri Quran Subset", "Amiri Quran", "Amiri", serif;
+  --fw-light: 200; /* ExtraLight file */
+  --fw-bold: 800; /* ExtraBold file */
+
+  /* Arabic needs room for marks: never below these */
+  --lh-body: 1.95;
+  --lh-title: 1.5;
+
+  /* Spacing */
+  --gutter: clamp(20px, 6vw, 96px);
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 112px;
+
+  --radius-s: 14px;
+  --radius-m: 22px;
+  --radius-l: 32px;
+
+  --shadow-soft: 0 24px 60px rgb(3 43 46 / 0.14);
+  --shadow-deep: 0 40px 90px rgb(1 19 21 / 0.35);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

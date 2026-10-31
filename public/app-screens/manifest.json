@@ -1,0 +1,205 @@
+{
+ "screens": {
+  "00-home": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/00-home.png"
+  },
+  "50-quran-home": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/50-quran-home.png"
+  },
+  "06-recite-setup": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/06-recite-setup.png"
+  },
+  "04-hidden-unclear": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/04-hidden-unclear.png"
+  },
+  "07-recite-wrong-word": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/07-recite-wrong-word.png"
+  },
+  "09-log": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/09-log.png"
+  },
+  "01-mushaf-p1": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/01-mushaf-p1.png"
+  },
+  "51-index-surahs": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/51-index-surahs.png"
+  },
+  "52-index-hizb": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/52-index-hizb.png"
+  },
+  "54-listen-follow-p2": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/54-listen-follow-p2.png"
+  },
+  "58-player-sheet": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/58-player-sheet.png"
+  },
+  "60-downloads": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/60-downloads.png"
+  },
+  "20-adhkar-home": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/20-adhkar-home.png"
+  },
+  "21-reader-first": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/21-reader-first.png"
+  },
+  "22-reader-complete": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/22-reader-complete.png"
+  },
+  "28-hisn-index": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/28-hisn-index.png"
+  },
+  "29-tasbih": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/29-tasbih.png"
+  },
+  "26-search": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/26-search.png"
+  },
+  "08-review": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/08-review.png"
+  },
+  "10-stats": {
+   "w": 720,
+   "h": 1561,
+   "source": "screenshots/10-stats.png"
+  }
+ },
+ "crops": {
+  "recite-feedback": {
+   "w": 760,
+   "h": 177,
+   "source": "screenshots/07-recite-wrong-word.png",
+   "box": [
+    29,
+    1872,
+    1204,
+    2146
+   ]
+  },
+  "recite-mic": {
+   "w": 225,
+   "h": 220,
+   "source": "screenshots/07-recite-wrong-word.png",
+   "box": [
+    505,
+    2195,
+    730,
+    2415
+   ]
+  },
+  "recite-hidden-row": {
+   "w": 760,
+   "h": 83,
+   "source": "screenshots/07-recite-wrong-word.png",
+   "box": [
+    60,
+    850,
+    1210,
+    975
+   ]
+  },
+  "recite-revealed": {
+   "w": 760,
+   "h": 123,
+   "source": "screenshots/07-recite-wrong-word.png",
+   "box": [
+    40,
+    640,
+    1210,
+    830
+   ]
+  },
+  "home-start": {
+   "w": 558,
+   "h": 315,
+   "source": "screenshots/50-quran-home.png",
+   "box": [
+    630,
+    238,
+    1188,
+    553
+   ]
+  },
+  "home-review": {
+   "w": 558,
+   "h": 315,
+   "source": "screenshots/50-quran-home.png",
+   "box": [
+    46,
+    238,
+    604,
+    553
+   ]
+  },
+  "listen-player": {
+   "w": 760,
+   "h": 105,
+   "source": "screenshots/54-listen-follow-p2.png",
+   "box": [
+    20,
+    2280,
+    1213,
+    2445
+   ]
+  },
+  "listen-ayah": {
+   "w": 760,
+   "h": 252,
+   "source": "screenshots/58-player-sheet.png",
+   "box": [
+    20,
+    590,
+    1213,
+    985
+   ]
+  },
+  "adhkar-complete": {
+   "w": 760,
+   "h": 213,
+   "source": "screenshots/22-reader-complete.png",
+   "box": [
+    46,
+    1982,
+    1188,
+    2302
+   ]
+  }
+ }
+}
