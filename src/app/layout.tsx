@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 /* Decides the motion mode before first paint:
    full  = pinned GSAP scenes
    lite  = static layout (reduced motion, data saver, or a very weak device) */
-const motionScript = `(function(){try{var d=document.documentElement,n=navigator,lite=matchMedia('(prefers-reduced-motion: reduce)').matches||(n.connection&&n.connection.saveData)||(n.deviceMemory&&n.deviceMemory<=2)||(n.hardwareConcurrency&&n.hardwareConcurrency<=2)||/[?&]motion=lite/.test(location.search);d.dataset.motion=lite?'lite':'full'}catch(e){}})()`;
+const motionScript = `(function(){try{var d=document.documentElement,n=navigator,q=location.search,lite=/[?&]motion=lite/.test(q)||(!/[?&]motion=full/.test(q)&&(matchMedia('(prefers-reduced-motion: reduce)').matches||(n.connection&&n.connection.saveData)));d.dataset.motion=lite?'lite':'full'}catch(e){}})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
