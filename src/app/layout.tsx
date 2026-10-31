@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "حِفظ — تطبيق للقرآن الكريم والأذكار",
@@ -33,7 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/fonts/TheYearofTheCamel-ExtraBold.woff2" as="font" type="font/woff2" crossOrigin="" />
         <link rel="preload" href="/fonts/TheYearofTheCamel-ExtraLight.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
