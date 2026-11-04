@@ -10,6 +10,7 @@ export function Footer() {
         <a href="#quran">المصحف</a>
         <a href="#adhkar">الأذكار</a>
         <a href="#top">إلى الأعلى</a>
+        <a href="/privacy">سياسة الخصوصية</a>
       </nav>
     </footer>
   );
